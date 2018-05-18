@@ -1,0 +1,54 @@
+#!/usr/bin/env python3
+import sys
+try:
+	i = 1
+	wrate = 0.165
+	l = []
+	a = []
+#input all salary to a[]
+	while i < len(sys.argv):
+		l.append(sys.argv[i].split(':'))
+		a.append(int(l[i-1][1]))
+		i = i + 1
+	j = 0
+	b = []
+#calculate the final salary
+	while j < len(a):
+		Total = a[j] * (1-wrate)
+		tax1 = Total - 3500
+		if tax1 <= 1500:
+			rate = 0.03
+			number = 0
+		elif tax1 > 1500 and tax1 <= 4500:
+			rate = 0.1
+			number = 105
+		elif tax1 > 4500 and tax1 <= 9000:
+			rate = 0.2
+			number = 555
+		elif tax1 > 9000 and tax1 <=35000:
+			rate = 0.25
+			number = 1005
+		elif tax1 > 35000 and tax1 <= 55000:
+			rate = 0.3
+			number = 2755
+		elif tax1 > 55000 and tax1 <=80000:
+			rate = 0.35
+			number = 5505
+		elif tax1 > 80000:
+			rate = 0.45
+			number = 13505
+		if tax1 < 0:
+			tax = 0
+		else:
+			tax = tax1 * rate - number
+		ftotal = Total - tax
+		b.append(ftotal)
+		j = j + 1
+	k = 0
+	while k < len(l):
+		d = l[k][0]
+		c = b[k]
+		print("{}:{:6.2f}".format(d,c))
+		k = k + 1
+except ValueError:
+	print("Parameter Error")
