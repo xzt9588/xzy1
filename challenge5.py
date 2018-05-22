@@ -25,21 +25,30 @@ if sys.argv[1] == 'C':
 	sha,city = getopt.getopt(sys.argv[1:],'-C')
 else:
 	city = ['DEFAULT']
-cf.read('testchallenge.cfg')
+#print(args.c)
+#print('testchallenge.cfg')
+#cf.read('testchallenge.cfg')
+cf.read(args.c)
 opts = cf.items(str.upper(city[0]))
 #print(opts)
+#print(opts[0][0])
 class Config(object):
 	def __init__(self):
 		self.config = self._read_config()
 	def _read_config(self):
-		try:
+#		try:
 			config = {}
-			with open(args.c) as f:
-				for i in f.readlines():
-					l = i.split('=')
-					config[l[0].strip()] = float(l[1].strip())
+			i = 0
+		#	with open(args.c) as f:
+#			for i in opts:
+			while i < len(opts):
+				#print('opts[0]:',opts[i][0])
+				#print('opts[1]:',opts[i][1])
+				config[opts[i][0]] = float(opts[i][1])
+				i += 1
+			#print(config)
 			return config	
-		except TypeError:
+#		except TypeError:
 			print("invalid input")
 config = Config()
 
@@ -73,10 +82,10 @@ class IncomeTaxCalculator(object):
 		# calculate the amount need to pay shebao
 			Total = int(l[i][1])
 			shebao = 0
-			if Total < config.config['JiShuL']:
-				shebao = config.config['JiShuL'] * Nrate
-			elif Total > config.config['JiShuH']:
-				shebao = config.config['JiShuH'] * Nrate
+			if Total < config.config['jishul']:
+				shebao = config.config['jishul'] * Nrate
+			elif Total > config.config['jishuh']:
+				shebao = config.config['jishuh'] * Nrate
 			else:
 				shebao = Total * Nrate
 			try:
@@ -147,3 +156,4 @@ with open(filename,'w') as file:
 #print(Shebao)
 #print(Nrate)
 #print(config.config['JiShuL'])
+
